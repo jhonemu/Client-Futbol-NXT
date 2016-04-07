@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jackson-core-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jackson-jaxrs-1.9.2.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jackson-mapper-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jackson-xc-1.9.2.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jersey-client-1.19.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jersey-core-1.19.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jersey-json-1.19.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jersey-server-1.19.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jersey-servlet-1.19.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jettison-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/jersey-archive-1.19/jersey-archive-1.19/lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
