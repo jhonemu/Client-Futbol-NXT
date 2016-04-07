@@ -32,8 +32,8 @@ public class OyenteMenu implements ActionListener {
 				}
 			}
 			else if(s.equals("Conectar a robot")){
-				Client client = Client.create();
-				WebResource webResource  = client.resource(	"http://localhost:8080/LejosService/rest/conect/robot");
+				
+				WebResource webResource  = Main.client.resource(Main.URL+"conect/robot");
 				
 				JSONObject respuesta ;
 				respuesta = webResource.get(JSONObject.class);
