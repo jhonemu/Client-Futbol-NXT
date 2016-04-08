@@ -148,6 +148,13 @@ public class VentanaPrincipal extends JFrame {
 		panel11.add(chutar);
 		panel6.add(panel8);
 		adelante.addActionListener(new OyenteButton());
+		correr.addActionListener(new OyenteButton());
+		atras.addActionListener(new OyenteButton());
+		runAtras.addActionListener(new OyenteButton());
+		izquierda.addActionListener(new OyenteButton());
+		derecha.addActionListener(new OyenteButton());
+		patear.addActionListener(new OyenteButton());
+		chutar.addActionListener(new OyenteButton());
 		icon = new ImageIcon("src\\images\\ic_launcher.png");
 		salir.addActionListener(new OyenteMenu());
 		conectar.addActionListener(new OyenteMenu());

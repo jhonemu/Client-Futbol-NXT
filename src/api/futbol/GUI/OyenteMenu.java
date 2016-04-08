@@ -5,17 +5,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.WebResource;
 
-
+import lejos.nxt.Motor;
+import lejos.nxt.remote.NXTCommand;
 import lejos.pc.comm.NXTComm;
+import lejos.pc.comm.NXTCommandConnector;
 
 
 public class OyenteMenu implements ActionListener {
@@ -44,7 +44,7 @@ public class OyenteMenu implements ActionListener {
 			
 				if(Main.conn.connectTo((String)arr.optJSONObject(0).get("Nombre"),NXTComm.LCP)){
 					JOptionPane.showMessageDialog(null,"Coneccion exitosa","EXITO",JOptionPane.INFORMATION_MESSAGE);
-					/*NXTCommandConnector.setNXTCommand(new NXTCommand(conn.getNXTComm()));
+					/*NXTCommandConnector.setNXTCommand(new NXTCommand(Main.conn.getNXTComm()));
 					
 					Motor.A.resetTachoCount();
 					Motor.A.forward();
