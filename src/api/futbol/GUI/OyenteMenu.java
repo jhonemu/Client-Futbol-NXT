@@ -12,10 +12,8 @@ import org.codehaus.jettison.json.JSONObject;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.WebResource;
 
-import lejos.nxt.Motor;
-import lejos.nxt.remote.NXTCommand;
 import lejos.pc.comm.NXTComm;
-import lejos.pc.comm.NXTCommandConnector;
+
 
 
 public class OyenteMenu implements ActionListener {
