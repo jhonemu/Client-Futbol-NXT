@@ -18,12 +18,13 @@ import lejos.pc.comm.NXTCommandConnector;
 
 public class OyenteButton implements ActionListener{
 
-	
+	int cont=1;
 
 	@Override
 	public void actionPerformed(ActionEvent clic) {
 		String s  = clic.getActionCommand();
 		if(s.equals("Trote")){
+			cont++;
 			try {
 			
 			WebResource webResource  = Main.client.resource(Main.URL+"jprimitivas/jugada");
@@ -34,9 +35,19 @@ public class OyenteButton implements ActionListener{
 			int q =Integer.valueOf((String) respuesta.get("Trotar").toString());
 			System.out.println(q);
 			NXTCommandConnector.setNXTCommand(new NXTCommand(Main.conn.getNXTComm()));
+			System.out.println(cont);
+			if(cont%2==0){
 			Motor.A.setSpeed(q);
+			Motor.C.setSpeed(q);
 			Motor.A.forward();
-			} catch (JSONException e) {
+			Motor.C.forward();
+			}
+			else{
+				Thread.sleep(1000);
+				Motor.A.stop();
+				Motor.C.stop();
+			}
+			} catch (JSONException | InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
