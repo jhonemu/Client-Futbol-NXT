@@ -5,15 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.WebResource;
-
-import lejos.pc.comm.NXTComm;
-
 
 
 public class OyenteMenu implements ActionListener {
@@ -33,32 +27,25 @@ public class OyenteMenu implements ActionListener {
 				
 				WebResource webResource  = Main.client.resource(Main.URL+"conect/robot");
 				
-				JSONObject respuesta ;
-				respuesta = webResource.get(JSONObject.class);
-				JSONArray arr = respuesta.getJSONArray("Conexion");
+				String respuesta ;
+				respuesta = webResource.get(String.class);
+				
 				System.out.println(respuesta);
-				System.out.println(arr);
-				System.out.println(arr.optJSONObject(0).get("Nombre"));
+				
 			
-				if(Main.conn.connectTo((String)arr.optJSONObject(0).get("Nombre"),NXTComm.LCP)){
-					JOptionPane.showMessageDialog(null,"Coneccion exitosa","EXITO",JOptionPane.INFORMATION_MESSAGE);
-					/*NXTCommandConnector.setNXTCommand(new NXTCommand(Main.conn.getNXTComm()));
+				if(respuesta.equals("Conexion Exitosa")){
+					JOptionPane.showMessageDialog(null,respuesta,"EXITO",JOptionPane.INFORMATION_MESSAGE);
+					//NXTCommandConnector.setNXTCommand(new NXTCommand(Main.conn.getNXTComm()));
 					
-					Motor.A.resetTachoCount();
-					Motor.A.forward();
-					Thread.sleep(1000);
-					Motor.A.stop();
-					System.out.println(Motor.A.getTachoCount());*/
-					
+				}
+				else if(respuesta.equals("Conexion fallida")){
+					JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
 			
 		}catch(ClientHandlerException e){
 			JOptionPane.showMessageDialog(null,"Servidor desconectado","ERROR",JOptionPane.ERROR_MESSAGE);
-		} catch (JSONException e) {
-			
-			e.printStackTrace();
 		} 
 	}
 
