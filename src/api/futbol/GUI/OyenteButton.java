@@ -13,25 +13,28 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class OyenteButton implements ActionListener{
 
-	int cont=1;
+	Integer cont=1;
 	WebResource webResource  = Main.client.resource(Main.URL+"jprimitivas/jugada");
 	@Override
 	public void actionPerformed(ActionEvent clic) {
 		String s  = clic.getActionCommand();
 		if(s.equals("Trote")){
 			cont++;
-		
-			
-			
+			System.out.println(cont.toString());
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
+			Params.add("cont",cont.toString());
+			String respuesta = webResource.queryParams(Params).get(String.class);
+			System.out.println(respuesta);
 			
 		}
 		else if (s.equals("Correr")){
-			
+			cont++;
+			System.out.println(cont.toString());
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
-			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
+			Params.add("cont",cont.toString());
+			String respuesta = webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
 
 		}
