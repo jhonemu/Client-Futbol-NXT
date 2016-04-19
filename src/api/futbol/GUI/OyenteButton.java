@@ -39,34 +39,38 @@ public class OyenteButton implements ActionListener{
 
 		}
 		else if (s.equals("Atras")){
-		
+			cont++;
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
-			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
+			Params.add("cont",cont.toString());
+			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
 
 		}
 		else if (s.equals("Correr Atras")){
-		
+			cont++;
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
-			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
+			Params.add("cont",cont.toString());
+			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
 
 		}
 		else if (s.equals("Izquierda")){
-		
+			cont++;
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
-			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
+			Params.add("cont",cont.toString());
+			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
 
 		}
 		else if (s.equals("Derecha")){
-		
+			cont++;
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
-			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
+			Params.add("cont",cont.toString());
+			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
 
 		}
