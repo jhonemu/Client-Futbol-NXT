@@ -71,7 +71,7 @@ public class OyenteButton implements ActionListener{
 			Params.add("jugada",s);
 			Params.add("cont",cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
-			System.out.println(respuesta);
+			//System.out.println(respuesta);
 
 		}
 		else if (s.equals("Chute")){

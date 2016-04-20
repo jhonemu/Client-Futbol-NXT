@@ -86,6 +86,7 @@ public class VentanaInicio extends JFrame implements ActionListener{
 		boton2.addActionListener(this);
 		boton3.addActionListener(this);
 		icon = new ImageIcon("src\\images\\ic_launcher.png");
+		
 		setIconImage(icon.getImage());
 		setSize(400,350);
 		setVisible(true);
@@ -119,7 +120,7 @@ public class VentanaInicio extends JFrame implements ActionListener{
 					if(respuesta.equals("Usuario Administrador")){
 						Main.ventanainicio.dispose();
 						Main.Usuario = "Administrador";
-						Main.ventanaPrincipal.lanzarAd();
+						Main.ventanaAd.lanzar();
 					}
 					else if(respuesta.equals("Usuario General")){
 						Main.ventanainicio.dispose();

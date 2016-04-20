@@ -71,14 +71,7 @@ public class VentanaPrincipal extends JFrame {
 		acciones = new JMenu("Acciones");
 		ayuda = new JMenu("Ayuda");
 		//items
-		if(Main.Usuario.equals("Administrador")){
-		crearjug = new JMenuItem("Crear Jugador");
-		crearjugcompleja = new JMenuItem("Crear Jugada compleja");
-		regAdmin=new JMenuItem("Registrar Usuario Administrador");
-		acciones.add(crearjug);
-		acciones.add(crearjugcompleja);
-		acciones.add(regAdmin);
-		}
+	
 		consultarEXjugada = new JMenuItem("Consultar Explicacion de una jugada");
 		consultarEXjugador = new JMenuItem("Consultar informacion de un jugador");
 		
