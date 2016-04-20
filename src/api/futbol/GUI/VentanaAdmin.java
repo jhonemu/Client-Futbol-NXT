@@ -10,24 +10,33 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.ws.rs.core.MultivaluedMap;
+
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 @SuppressWarnings("serial")
 public class VentanaAdmin extends JFrame implements ActionListener {
 	Container contenedor;
 	JPanel panel1,panel2;
-	JTextArea explic;
+	JLabel explic;
 	JLabel bien;
 	JButton registraradmin,crearjugador,crearjugada,remjugador,remjugada;
 	JTextField nom = new JTextField();
 	JPasswordField contra = new JPasswordField();
 	JButton reg = new JButton("Registrar");
+	String[]aux={"prueba","prueba2"};
+
+	JComboBox<String> lista = new JComboBox<String>(aux);
 	public VentanaAdmin(){
 		super("Administrador Futbol NXT");
 	}
@@ -44,9 +53,7 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 		panel1.setLayout(new BoxLayout(panel1,BoxLayout.Y_AXIS));
 		panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 		bien = new JLabel("Bienvenido Administrador");
-		explic = new JTextArea(8,8);
-		explic.setText("Porfavor de clic en la opcion que desea ejecutar");
-		explic.setEditable(false);
+		explic = new JLabel("<html><boddy>Porfavor de clic en la opcion que desea ejecutar y realice la accion deseada</boddy></html>");
 		//panel1.setBackground(Color.BLACK);
 		//panel2.setBackground(Color.BLUE);
 		
@@ -78,6 +85,34 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 			contra.setMaximumSize(new Dimension(450,23));
 			panel2.add(contra);
 			panel2.add(reg);
+			reg.addActionListener(new ActionListener(){
+				@SuppressWarnings("deprecation")
+				@Override
+				public void actionPerformed(ActionEvent clic) {
+					String Usuario =nom.getText();
+					String contras =contra.getText();
+					if(Usuario.length() == 0){
+						JOptionPane.showMessageDialog(null,"Porfavor ingrese un usuario y clave validos","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+					else if(contras.length()==0){
+						JOptionPane.showMessageDialog(null,"Porfavor ingrese un usuario y clave validos","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+					else{
+						WebResource webResource  = Main.client.resource(Main.URL+"LoginUs/radmin");
+						MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+						Params.add("username", Usuario);
+						Params.add("password",contras);
+						String respuesta = webResource.queryParams(Params).post(String.class);
+						if(respuesta.equals("El nombre de usuario ya esta en uso")){
+							JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
+						}
+						else{
+							JOptionPane.showMessageDialog(null,respuesta,"Bienvenido",JOptionPane.INFORMATION_MESSAGE);
+							
+						}
+					}
+				}
+			});
 		}
 	}
 }
