@@ -16,9 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.ws.rs.core.MultivaluedMap;
+
+import org.json.simple.JSONObject;
 
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
@@ -46,7 +47,7 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		registraradmin = new JButton("Registrar Administrador");
-		crearjugador = new JButton("Crear nuevo Jugadro");
+		crearjugador = new JButton("Crear nuevo Jugador");
 		crearjugada = new JButton("Crear nueva Jugada");
 		remjugador = new JButton("Remover un Jugador");
 		remjugada = new JButton("Remover una Jugada");
@@ -56,7 +57,7 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 		explic = new JLabel("<html><boddy>Porfavor de clic en la opcion que desea ejecutar y realice la accion deseada</boddy></html>");
 		//panel1.setBackground(Color.BLACK);
 		//panel2.setBackground(Color.BLUE);
-		
+
 		contenedor.add(panel1);
 		contenedor.add(panel2);
 		panel1.add(bien);
@@ -67,6 +68,10 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 		panel1.add(remjugador);
 		panel2.add(explic);
 		registraradmin.addActionListener(this);
+		crearjugada.addActionListener(this);
+		remjugada.addActionListener(this);
+		crearjugador.addActionListener(this);
+		remjugador.addActionListener(this);
 		setSize(500,515);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -108,11 +113,40 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 						}
 						else{
 							JOptionPane.showMessageDialog(null,respuesta,"Bienvenido",JOptionPane.INFORMATION_MESSAGE);
-							
+
 						}
 					}
 				}
 			});
+		}else if(s.equals("Crear nueva Jugada")){
+			panel2.removeAll();
+			panel2.updateUI();
+			panel2.add(new JLabel("Nombre de la jugada"));
+			JTextField nombre =new JTextField();
+			JTextField fecha =new JTextField();
+			nombre.setMaximumSize(new Dimension(450,23));
+			fecha.setMaximumSize(new Dimension(450,23));
+			panel2.add(nombre);
+			panel2.add(new JLabel("Fecha en formato dd-mm-aa"));
+			panel2.add(fecha);
+			JButton crear = new JButton("Crear");
+			panel2.add(crear);
+			crear.addActionListener(new ActionListener(){
+
+				
+				@Override
+				public void actionPerformed(ActionEvent arg) {
+					
+					
+				}
+				
+			});
+		}else if(s.equals("Crear nuevo Jugador")){
+			System.out.println("holi");
+		}else if(s.equals("Remover una Jugada")){
+			System.out.println("holi");
+		}else if(s.equals("Remover un Jugador")){
+			System.out.println("holi");
 		}
 	}
 }

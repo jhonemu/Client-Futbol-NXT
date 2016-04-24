@@ -116,7 +116,9 @@ public class VentanaInicio extends JFrame implements ActionListener{
 					MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 					Params.add("username", Usuario);
 					Params.add("password", clave);
+					
 					String respuesta = webResource.queryParams(Params).get(String.class);
+					
 					if(respuesta.equals("Usuario Administrador")){
 						Main.ventanainicio.dispose();
 						Main.Usuario = "Administrador";

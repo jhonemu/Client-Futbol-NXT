@@ -3,12 +3,15 @@ package api.futbol.GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -20,9 +23,9 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal extends JFrame  {
 	Container contenedor;
-	JPanel panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9,panel10,panel11;
+	JPanel panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9,panel10,panel11,panel12,panel13;
 	JMenuBar barra;
 	JMenu archivo,acciones,ayuda;
 	JMenuItem pausar,inciarpartido,conectar,salir,regAdmin,listjugadas,crearjug,finpartido,consultarEXjugada,cargar,consultarEXjugador,crearjugcompleja,listJugadores;
@@ -31,10 +34,13 @@ public class VentanaPrincipal extends JFrame {
 	JLabel historia,cancha;
 	JScrollPane scroll;
 	Image s;
-	JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras;
+	JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras , ejecutar, parar;
+	
+	JComboBox<String> jugadascomplejas;
 	public VentanaPrincipal(){
 		super("Futbol-NXT");
 	}
+	
 	
 	public void lanzarAd(){
 		contenedor = this.getContentPane();
@@ -49,6 +55,11 @@ public class VentanaPrincipal extends JFrame {
 		panel9 = new JPanel();
 		panel10 = new JPanel();
 		panel11 = new JPanel();
+		panel12 = new JPanel();
+		panel13 = new JPanel();
+		jugadascomplejas = new JComboBox<String>();
+		ejecutar = new JButton("Ejecutar");
+		parar = new JButton("Parar");
 		adelante = new JButton("Trote");
 		correr = new JButton("Correr");
 		atras =  new JButton("Atras");
@@ -57,7 +68,8 @@ public class VentanaPrincipal extends JFrame {
 		derecha = new JButton("Derecha");
 		patear =  new JButton("Chute");
 		chutar = new JButton("Patear");
-		panel8.setBackground(Color.BLUE);
+		panel12.setBackground(Color.BLUE);
+		panel13.setBackground(Color.black);
 		historia = new JLabel("Historia");
 		areah = new JTextArea(5,20);
 		areah.setEditable(false);
@@ -140,6 +152,14 @@ public class VentanaPrincipal extends JFrame {
 		panel11.add(patear);
 		panel11.add(chutar);
 		panel6.add(panel8);
+		panel8.setLayout(new BoxLayout(panel8,BoxLayout.Y_AXIS));
+		panel8.add(panel12);
+		panel8.add(panel13);
+		panel13.setLayout(new GridLayout(1,2,10,10));
+		panel13.add(ejecutar);
+		panel13.add(parar);
+		jugadascomplejas.setMinimumSize(new Dimension(10,100));
+		panel12.add(jugadascomplejas);
 		adelante.addActionListener(new OyenteButton());
 		correr.addActionListener(new OyenteButton());
 		atras.addActionListener(new OyenteButton());
@@ -157,6 +177,5 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo (null);
 	}
-	
 	
 }
