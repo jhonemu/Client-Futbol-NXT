@@ -3,7 +3,6 @@ package api.futbol.GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -58,6 +57,8 @@ public class VentanaPrincipal extends JFrame  {
 		panel12 = new JPanel();
 		panel13 = new JPanel();
 		jugadascomplejas = new JComboBox<String>();
+		
+		
 		ejecutar = new JButton("Ejecutar");
 		parar = new JButton("Parar");
 		adelante = new JButton("Trote");
@@ -158,8 +159,10 @@ public class VentanaPrincipal extends JFrame  {
 		panel13.setLayout(new GridLayout(1,2,10,10));
 		panel13.add(ejecutar);
 		panel13.add(parar);
-		jugadascomplejas.setMinimumSize(new Dimension(10,100));
+		
+		panel12.setLayout(new GridLayout(1,1,10,10));
 		panel12.add(jugadascomplejas);
+		
 		adelante.addActionListener(new OyenteButton());
 		correr.addActionListener(new OyenteButton());
 		atras.addActionListener(new OyenteButton());
