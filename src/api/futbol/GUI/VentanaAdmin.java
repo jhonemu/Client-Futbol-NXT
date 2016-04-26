@@ -2,48 +2,32 @@ package api.futbol.GUI;
 
 
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.ws.rs.core.MultivaluedMap;
-
-import org.json.simple.JSONObject;
-
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
-
 
 @SuppressWarnings("serial")
-public class VentanaAdmin extends JFrame implements ActionListener {
+public class VentanaAdmin extends JFrame {
 	Container contenedor;
-	JPanel panel1,panel2;
+	JPanel panel1;
+	public static JPanel panel2;
 	JLabel explic;
 	JLabel bien;
 	JButton registraradmin,crearjugador,crearjugada,remjugador,remjugada;
-	JTextField nom = new JTextField();
-	JPasswordField contra = new JPasswordField();
-	JButton reg = new JButton("Registrar");
-	String[]aux={"prueba","prueba2"};
-
-	JComboBox<String> lista = new JComboBox<String>(aux);
+	
+	
+	
 	public VentanaAdmin(){
 		super("Administrador Futbol NXT");
 	}
 	public void lanzar(){
 		contenedor = this.getContentPane();
-		contenedor.setLayout(new GridLayout(1,2));
+		contenedor.setLayout(new GridLayout(1,2,10,10));
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		registraradmin = new JButton("Registrar Administrador");
@@ -51,7 +35,8 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 		crearjugada = new JButton("Crear nueva Jugada");
 		remjugador = new JButton("Remover un Jugador");
 		remjugada = new JButton("Remover una Jugada");
-		panel1.setLayout(new BoxLayout(panel1,BoxLayout.Y_AXIS));
+		//panel1.setLayout(new BoxLayout(panel1,BoxLayout.Y_AXIS));
+		panel1.setLayout(new GridLayout(10,1,10,10));
 		panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 		bien = new JLabel("Bienvenido Administrador");
 		explic = new JLabel("<html><boddy>Porfavor de clic en la opcion que desea ejecutar y realice la accion deseada</boddy></html>");
@@ -67,86 +52,15 @@ public class VentanaAdmin extends JFrame implements ActionListener {
 		panel1.add(crearjugador);
 		panel1.add(remjugador);
 		panel2.add(explic);
-		registraradmin.addActionListener(this);
-		crearjugada.addActionListener(this);
-		remjugada.addActionListener(this);
-		crearjugador.addActionListener(this);
-		remjugador.addActionListener(this);
+		registraradmin.addActionListener( new OyenteBotonAdmin());
+		crearjugada.addActionListener(new OyenteBotonAdmin());
+		remjugada.addActionListener(new OyenteBotonAdmin());
+		crearjugador.addActionListener(new OyenteBotonAdmin());
+		remjugador.addActionListener(new OyenteBotonAdmin());
 		setSize(500,515);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo (null);
 	}
-	@Override
-	public void actionPerformed(ActionEvent clic) {
-		String s = (String)clic.getActionCommand();
-		if(s.equals("Registrar Administrador")){
-			panel2.removeAll();
-			panel2.updateUI();
-			panel2.add(new JLabel("Nombre de usuario"));
-			nom.setMaximumSize(new Dimension(450,23));
-			panel2.add(nom);
-			panel2.add(new JLabel("Contraseña"));
-			contra.setMaximumSize(new Dimension(450,23));
-			panel2.add(contra);
-			panel2.add(reg);
-			reg.addActionListener(new ActionListener(){
-				@SuppressWarnings("deprecation")
-				@Override
-				public void actionPerformed(ActionEvent clic) {
-					String Usuario =nom.getText();
-					String contras =contra.getText();
-					if(Usuario.length() == 0){
-						JOptionPane.showMessageDialog(null,"Porfavor ingrese un usuario y clave validos","ERROR",JOptionPane.ERROR_MESSAGE);
-					}
-					else if(contras.length()==0){
-						JOptionPane.showMessageDialog(null,"Porfavor ingrese un usuario y clave validos","ERROR",JOptionPane.ERROR_MESSAGE);
-					}
-					else{
-						WebResource webResource  = Main.client.resource(Main.URL+"LoginUs/radmin");
-						MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
-						Params.add("username", Usuario);
-						Params.add("password",contras);
-						String respuesta = webResource.queryParams(Params).post(String.class);
-						if(respuesta.equals("El nombre de usuario ya esta en uso")){
-							JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
-						}
-						else{
-							JOptionPane.showMessageDialog(null,respuesta,"Bienvenido",JOptionPane.INFORMATION_MESSAGE);
-
-						}
-					}
-				}
-			});
-		}else if(s.equals("Crear nueva Jugada")){
-			panel2.removeAll();
-			panel2.updateUI();
-			panel2.add(new JLabel("Nombre de la jugada"));
-			JTextField nombre =new JTextField();
-			JTextField fecha =new JTextField();
-			nombre.setMaximumSize(new Dimension(450,23));
-			fecha.setMaximumSize(new Dimension(450,23));
-			panel2.add(nombre);
-			panel2.add(new JLabel("Fecha en formato dd-mm-aa"));
-			panel2.add(fecha);
-			JButton crear = new JButton("Crear");
-			panel2.add(crear);
-			crear.addActionListener(new ActionListener(){
-
-				
-				@Override
-				public void actionPerformed(ActionEvent arg) {
-					
-					
-				}
-				
-			});
-		}else if(s.equals("Crear nuevo Jugador")){
-			System.out.println("holi");
-		}else if(s.equals("Remover una Jugada")){
-			System.out.println("holi");
-		}else if(s.equals("Remover un Jugador")){
-			System.out.println("holi");
-		}
-	}
+	
 }
