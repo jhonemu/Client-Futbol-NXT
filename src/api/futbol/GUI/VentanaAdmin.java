@@ -38,7 +38,7 @@ public class VentanaAdmin extends JFrame {
 		//panel1.setLayout(new BoxLayout(panel1,BoxLayout.Y_AXIS));
 		panel1.setLayout(new GridLayout(10,1,10,10));
 		panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
-		bien = new JLabel("Bienvenido Administrador");
+		bien = new JLabel("Bienvenido Administrador " + Main.Usuario );
 		explic = new JLabel("<html><boddy>Porfavor de clic en la opcion que desea ejecutar y realice la accion deseada</boddy></html>");
 		//panel1.setBackground(Color.BLACK);
 		//panel2.setBackground(Color.BLUE);
@@ -57,7 +57,7 @@ public class VentanaAdmin extends JFrame {
 		remjugada.addActionListener(new OyenteBotonAdmin());
 		crearjugador.addActionListener(new OyenteBotonAdmin());
 		remjugador.addActionListener(new OyenteBotonAdmin());
-		setSize(500,515);
+		setSize(500,550);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo (null);

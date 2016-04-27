@@ -119,18 +119,19 @@ public class VentanaInicio extends JFrame implements ActionListener{
 					
 					String respuesta = webResource.queryParams(Params).get(String.class);
 					
-					if(respuesta.equals("Usuario Administrador")){
-						Main.ventanainicio.dispose();
-						Main.Usuario = "Administrador";
-						Main.ventanaAd.lanzar();
-					}
-					else if(respuesta.equals("Usuario General")){
+					
+					if(respuesta.equals("Usuario General")){
 						Main.ventanainicio.dispose();
 						Main.Usuario = "General";
 						Main.ventanaPrincipal.lanzarAd();
 					}
 					else if(respuesta.equals("Usuario no valido")){
 						JOptionPane.showMessageDialog(null,"Porfavor ingrese un usuario y clave validos","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+					else{
+						Main.ventanainicio.dispose();
+						Main.Usuario = respuesta;
+						Main.ventanaAd.lanzar();
 					}
 				}
 			}

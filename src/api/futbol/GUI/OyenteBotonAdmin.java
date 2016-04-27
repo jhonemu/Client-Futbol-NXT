@@ -9,7 +9,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.sun.jersey.api.client.WebResource;
@@ -49,6 +53,7 @@ public class OyenteBotonAdmin implements ActionListener {
 						MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 						Params.add("username", Usuario);
 						Params.add("password",contras);
+						System.out.println(Params);
 						String respuesta = webResource.queryParams(Params).post(String.class);
 						if(respuesta.equals("El nombre de usuario ya esta en uso")){
 							JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
@@ -71,7 +76,11 @@ public class OyenteBotonAdmin implements ActionListener {
 			JTextField fecha =new JTextField();
 			fecha.setMaximumSize(new Dimension(450,23));
 			VentanaAdmin.panel2.add(fecha);
-			VentanaAdmin.panel2.add(new JLabel("<html><boddy>Porfavor escoja minimo 2 jugadas primitivas</boddy></html>"));
+			VentanaAdmin.panel2.add(new JLabel("Escoja tipo de jugada"));
+			String[]tipo = {"Jugada Ofensiva","Jugada Defensiva","Jugada TiroLibre"};
+			JComboBox<String> tip = new JComboBox<String>(tipo);
+			VentanaAdmin.panel2.add(tip);
+			VentanaAdmin.panel2.add(new JLabel("Escoja entre 2-10 jugadas"));
 			String[]aux={"","Trotar","Correr","Girar a la izquierda","Girar a la derecha","Chute","Patear","Ir atras","Correr atras"};
 
 			JComboBox<String> lista = new JComboBox<String>(aux);
@@ -84,7 +93,7 @@ public class OyenteBotonAdmin implements ActionListener {
 			JComboBox<String> lista7 = new JComboBox<String>(aux);
 			JComboBox<String> lista8 = new JComboBox<String>(aux);
 			JComboBox<String> lista9 = new JComboBox<String>(aux);
-			
+
 			VentanaAdmin.panel2.add(lista);
 			VentanaAdmin.panel2.add(lista1);
 			VentanaAdmin.panel2.add(lista2);
@@ -96,15 +105,95 @@ public class OyenteBotonAdmin implements ActionListener {
 			VentanaAdmin.panel2.add(lista8);
 			VentanaAdmin.panel2.add(lista9);
 			JButton crear = new JButton("Crear");
+			VentanaAdmin.panel2.add(new JLabel("Ingrece Una Explicacion"));
+			JTextArea exp = new JTextArea(5,5);
+			exp.setLineWrap(true);
+			exp.setWrapStyleWord(true);
+			JScrollPane scroll = new JScrollPane(exp);
+			scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			VentanaAdmin.panel2.add(scroll);
 			VentanaAdmin.panel2.add(crear);
 			crear.addActionListener(new ActionListener(){
 
-				
+
 				@Override
 				public void actionPerformed(ActionEvent arg) {
-					
+					if(nombre.getText().isEmpty() || fecha.getText().isEmpty() ||exp.getText().isEmpty()){
+						JOptionPane.showMessageDialog(null,"Porfavor todos los campos de texto","ERROR",JOptionPane.ERROR_MESSAGE);
+					}
+					else{
+						if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if((lista.getSelectedIndex()!= 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0)){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if((lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()!= 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0)){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()!= 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex() == 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()!= 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex() == 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()!= 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex() == 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()!= 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()!= 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()!= 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()!= 0&&lista9.getSelectedIndex()== 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else if(lista.getSelectedIndex()== 0 &&lista1.getSelectedIndex()== 0&&lista2.getSelectedIndex()== 0&&lista3.getSelectedIndex()== 0&&lista4.getSelectedIndex()== 0&&lista5.getSelectedIndex()== 0&&
+								lista6.getSelectedIndex()== 0&&lista7.getSelectedIndex()== 0&&lista8.getSelectedIndex()== 0&&lista9.getSelectedIndex()!= 0){
+							JOptionPane.showMessageDialog(null,"Porfavor ingrese minimo 2 jugadas","ERROR",JOptionPane.ERROR_MESSAGE);
+						}else{
+							WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/crea");
+							MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+							String tipo = (String) tip.getSelectedItem();
+							String nombres = nombre.getText();
+							String fc =fecha.getText();
+							String autor = Main.Usuario;
+							String ex =  exp.getText();
+							String j = (String) lista.getSelectedItem();
+							String j1 = (String) lista1.getSelectedItem();
+							String j2 =(String) lista2.getSelectedItem();
+							String j3 = (String) lista3.getSelectedItem();
+							String j4 = (String) lista4.getSelectedItem();
+							String j5 = (String) lista5.getSelectedItem();
+							String j6 = (String) lista6.getSelectedItem();
+							String j7 = (String) lista7.getSelectedItem();
+							String j8 =(String) lista8.getSelectedItem();
+							String j9 =(String) lista9.getSelectedItem();
+							Params.add("tipo", tipo);
+							Params.add("nombre", nombres);
+							Params.add("fecha", fc);
+							Params.add("autor",autor);
+							Params.add("jugada", j);
+							Params.add("jugada1", j1);
+							Params.add("jugada2",j2 );
+							Params.add("jugada3", j3);
+							Params.add("jugada4", j4);
+							Params.add("jugada5", j5);
+							Params.add("jugada6", j6);
+							Params.add("jugada7", j7);
+							Params.add("jugada8", j8);
+							Params.add("jugada9", j9);
+							Params.add("explicacion",ex);
+							String respuesta = webResource.queryParams(Params).post(String.class);
+							JOptionPane.showMessageDialog(null,respuesta,"felicidades",JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
 				}
-				
+
 			});
 		}else if(s.equals("Crear nuevo Jugador")){
 			System.out.println("holi");
