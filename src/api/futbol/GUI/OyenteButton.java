@@ -78,14 +78,15 @@ public class OyenteButton implements ActionListener{
 			
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
+			Params.add("cont", cont.toString());
 			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
 			System.out.println(respuesta);
 
 		}
 		else if (s.equals("Patear")){
-		
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
+			Params.add("cont", cont.toString());
 			JSONObject respuesta =webResource.queryParams(Params).get(JSONObject.class);
 			System.out.println(respuesta);
 

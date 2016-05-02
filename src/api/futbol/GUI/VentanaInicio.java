@@ -113,14 +113,16 @@ public class VentanaInicio extends JFrame implements ActionListener{
 				else{
 					
 					WebResource webResource  = Main.client.resource(Main.URL+"LoginUs/confirmar");
+					WebResource webResource2  = Main.client.resource(Main.URL+"carga/datos");
 					MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 					Params.add("username", Usuario);
 					Params.add("password", clave);
-					
+					String respuesta2 = webResource2.get(String.class);
 					String respuesta = webResource.queryParams(Params).get(String.class);
 					
 					
 					if(respuesta.equals("Usuario General")){
+						JOptionPane.showMessageDialog(null,respuesta2,"ERROR",JOptionPane.INFORMATION_MESSAGE);
 						Main.ventanainicio.dispose();
 						Main.Usuario = "General";
 						Main.ventanaPrincipal.lanzarAd();
@@ -129,6 +131,7 @@ public class VentanaInicio extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(null,"Porfavor ingrese un usuario y clave validos","ERROR",JOptionPane.ERROR_MESSAGE);
 					}
 					else{
+						JOptionPane.showMessageDialog(null,respuesta2,"ERROR",JOptionPane.INFORMATION_MESSAGE);
 						Main.ventanainicio.dispose();
 						Main.Usuario = respuesta;
 						Main.ventanaAd.lanzar();
