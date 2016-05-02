@@ -16,6 +16,10 @@ import javax.swing.ScrollPaneConstants;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
@@ -198,7 +202,42 @@ public class OyenteBotonAdmin implements ActionListener {
 		}else if(s.equals("Crear nuevo Jugador")){
 			System.out.println("holi");
 		}else if(s.equals("Remover una Jugada")){
-			System.out.println("holi");
+			VentanaAdmin.panel2.removeAll();
+			VentanaAdmin.panel2.updateUI();
+			WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/lista");
+			JSONObject respuesta = webResource.get(JSONObject.class);
+			try {
+				JSONArray jug = (JSONArray) respuesta.get("Jugadas");
+				int a = jug.length();
+				String []  com = new String [a];
+				
+				for(int i=0;i<jug.length();i++){
+					JSONObject aux = (JSONObject) jug.get(i);
+					com[i] = (String)aux.get("Nombre jugada");
+				}
+				VentanaAdmin.panel2.add(new JLabel("Escoja la jugada que desa borrar"));
+				JComboBox<String> lista = new JComboBox<String>(com);
+				lista.setMaximumSize(new Dimension(450,23));
+				VentanaAdmin.panel2.add(lista);
+				JButton borrar = new JButton("Borrar");
+				VentanaAdmin.panel2.add(borrar);
+				borrar.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						WebResource webResources  = Main.client.resource(Main.URL+"jcomplejas/eliminar");
+						String respuesta = webResources.queryParam("nombre", (String) lista.getSelectedItem()).delete(String.class);
+						JOptionPane.showMessageDialog(null,respuesta,"Listo",JOptionPane.INFORMATION_MESSAGE);
+						
+					}
+					
+				});
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+			}
+			
+			
 		}else if(s.equals("Remover un Jugador")){
 			System.out.println("holi");
 		}
