@@ -3,9 +3,11 @@ package api.futbol.GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -21,8 +23,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import com.sun.jersey.api.client.WebResource;
+
 @SuppressWarnings("serial")
-public class VentanaPrincipal extends JFrame  {
+public class VentanaPrincipal extends JFrame implements ActionListener  {
 	Container contenedor;
 	JPanel panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9,panel10,panel11,panel12,panel13;
 	JMenuBar barra;
@@ -33,9 +40,9 @@ public class VentanaPrincipal extends JFrame  {
 	JLabel historia,cancha;
 	JScrollPane scroll;
 	Image s;
-	JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras , ejecutar, parar;
-	
-	JComboBox<String> jugadascomplejas;
+	JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras , ejecutar, parar,consultar;
+	public static int tip = 0;
+	public static JComboBox<String> jugadascomplejas,options;
 	public VentanaPrincipal(){
 		super("Futbol-NXT");
 	}
@@ -57,8 +64,8 @@ public class VentanaPrincipal extends JFrame  {
 		panel12 = new JPanel();
 		panel13 = new JPanel();
 		jugadascomplejas = new JComboBox<String>();
-		
-		
+		options = new JComboBox<String>();
+		consultar = new JButton("Consultar");
 		ejecutar = new JButton("Ejecutar");
 		parar = new JButton("Parar");
 		adelante = new JButton("Trote");
@@ -76,6 +83,7 @@ public class VentanaPrincipal extends JFrame  {
 		areah.setEditable(false);
 		areah.setLineWrap(true);
 		areah.setWrapStyleWord(true);
+		areah.setText("Zona de informacion");
 		scroll = new JScrollPane(areah);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		//espacio menu
@@ -127,6 +135,9 @@ public class VentanaPrincipal extends JFrame  {
 		panel2.add(panel3,BorderLayout.EAST);
 		panel2.add(panel4, BorderLayout.CENTER);
 		panel3.setLayout(new BoxLayout(panel3,BoxLayout.Y_AXIS));
+		options.setMaximumSize(new Dimension(450,23));
+		panel3.add(options);
+		panel3.add(consultar);
 		panel3.add(historia);
 		panel3.add(scroll);
 		panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
@@ -162,7 +173,7 @@ public class VentanaPrincipal extends JFrame  {
 		
 		panel12.setLayout(new GridLayout(1,1,10,10));
 		panel12.add(jugadascomplejas);
-		
+		consultar.addActionListener(this);
 		adelante.addActionListener(new OyenteButton());
 		correr.addActionListener(new OyenteButton());
 		atras.addActionListener(new OyenteButton());
@@ -174,11 +185,36 @@ public class VentanaPrincipal extends JFrame  {
 		icon = new ImageIcon("src\\images\\ic_launcher.png");
 		salir.addActionListener(new OyenteMenu());
 		conectar.addActionListener(new OyenteMenu());
+		consultarEXjugada.addActionListener(new OyenteMenu());
+		consultarEXjugador.addActionListener(new OyenteMenu());
 		setIconImage(icon.getImage());
 		setSize(900,650);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo (null);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg) {
+		
+		if(tip == 1){
+			WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/explicacion");
+			JSONObject respuesta = webResource.queryParam("nombre", (String) options.getSelectedItem()).get(JSONObject.class);
+			try {
+				String nombre = respuesta.getString("nombre");
+				String fecha = respuesta.getString("fecha");
+				String autor = respuesta.getString("auto");
+				String exp = respuesta.getString("expli");
+				areah.setText("");
+				areah.append("La jugada: "+ nombre+"\n"+ "Fue creada el: " + fecha+"\n"+ "Por: "+ autor+"\n"+"Y es una: "+exp);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		else if(tip == 2){
+			
+		}
 	}
 	
 }
