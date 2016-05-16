@@ -20,6 +20,7 @@ public class OyenteButton implements ActionListener{
 		String s  = clic.getActionCommand();
 		if(s.equals("Trote")){
 			cont++;
+		
 			System.out.println("contador trote "+cont.toString());
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
@@ -36,7 +37,8 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont",cont.toString());
 			String respuesta = webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
-
+		
+			
 		}
 		else if (s.equals("Atras")){
 			cont++;
@@ -54,7 +56,7 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont",cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
-
+			
 		}
 		else if (s.equals("Izquierda")){
 			cont++;

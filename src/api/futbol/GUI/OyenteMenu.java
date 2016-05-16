@@ -27,7 +27,8 @@ public class OyenteMenu implements ActionListener {
 				}
 			}
 			else if(s.equals("Conectar a robot")){
-				WebResource webResource  = Main.client.resource(Main.URL+"conect/robot");
+				new Conexion().Lanzar();
+				/*WebResource webResource  = Main.client.resource(Main.URL+"conect/robot");
 				String respuesta ;
 				respuesta = webResource.get(String.class);
 				if(respuesta.equals("Conexion Exitosa")){
@@ -35,7 +36,7 @@ public class OyenteMenu implements ActionListener {
 				}
 				else if(respuesta.equals("Conexion fallida")){
 					JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
-				}
+				}*/
 			}
 			else if(s.equals("Consultar Explicacion de una jugada")){
 				VentanaPrincipal.options.removeAllItems();

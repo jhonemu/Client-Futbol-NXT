@@ -36,7 +36,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 	JMenu archivo,acciones,ayuda;
 	JMenuItem pausar,inciarpartido,conectar,salir,regAdmin,listjugadas,crearjug,finpartido,consultarEXjugada,cargar,consultarEXjugador,crearjugcompleja,listJugadores;
 	ImageIcon icon;
-	JTextArea areah;
+	public static JTextArea areah;
 	JLabel historia,cancha;
 	JScrollPane scroll;
 	Image s;
@@ -213,7 +213,20 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 			}
 		}
 		else if(tip == 2){
-			
+			WebResource webResource  = Main.client.resource(Main.URL+"jugador/info");
+			JSONObject respuesta = webResource.queryParam("nombre", (String) options.getSelectedItem()).get(JSONObject.class);
+			System.out.println(respuesta);
+			try {
+				
+				areah.setText("");
+				if(respuesta.get("posicion").equals("Arquero")){
+				areah.append("Eljugador: "+respuesta.get("nombre") + "\n"+ "Juega de: " + respuesta.get("posicion")+ "\n"+ "Con el dorsal: " + respuesta.get("dorsal") +"\n"+ "Lleva "+ respuesta.get("tiempo sin gol") + " Sin gol" );
+				}else if(respuesta.get("posicion").equals("Delantero")){
+					areah.append("Eljugador: "+respuesta.get("nombre") + "\n"+ "Juega de: " + respuesta.get("posicion")+ "\n"+ "Con el dorsal: " + respuesta.get("dorsal") +"\n"+ "Lleva "+ respuesta.get("goles marcados") + " goles" );
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
