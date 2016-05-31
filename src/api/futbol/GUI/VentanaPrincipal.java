@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -34,13 +35,17 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 	JPanel panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9,panel10,panel11,panel12,panel13;
 	JMenuBar barra;
 	JMenu archivo,acciones,ayuda;
-	JMenuItem pausar,inciarpartido,conectar,salir,regAdmin,listjugadas,crearjug,finpartido,consultarEXjugada,cargar,consultarEXjugador,crearjugcompleja,listJugadores;
+	JMenuItem help,inciarpartido,conectar,salir,regAdmin,listjugadas,crearjug,finpartido,consultarEXjugada,cargar,consultarEXjugador,crearjugcompleja,listJugadores;
 	ImageIcon icon;
 	public static JTextArea areah;
-	JLabel historia,cancha;
+	public static ArrayList<String> jugadasdelantero = new ArrayList<>();
+	public static ArrayList<String> jugadasarquero = new ArrayList<>();
+	public static JLabel historia,cancha;
+	
 	JScrollPane scroll;
 	Image s;
-	JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras , ejecutar, parar,consultar;
+	
+	public static JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras , ejecutar, parar,consultar;
 	public static int tip = 0;
 	public static JComboBox<String> jugadascomplejas,options;
 	public VentanaPrincipal(){
@@ -95,22 +100,20 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 	
 		consultarEXjugada = new JMenuItem("Consultar Explicacion de una jugada");
 		consultarEXjugador = new JMenuItem("Consultar informacion de un jugador");
+		help = new JMenuItem("Ayuda");
 		
-		listJugadores = new JMenuItem("Lista de jugadores");
-		listjugadas = new JMenuItem("Lista de jugadas");
 		inciarpartido = new JMenuItem("Iniciar partido");
 		conectar =new JMenuItem("Conectar a robot");
 		
 		finpartido = new JMenuItem("Finalizar partido");
-		cargar = new JMenuItem("Reanudar");
+		
 		salir = new JMenuItem("Salir");
-		pausar = new JMenuItem("Pausar");
+		
 		//items
 		//archivo
 		archivo.add(consultarEXjugada);
 		archivo.add(consultarEXjugador);
-		archivo.add(listJugadores);
-		archivo.add(listjugadas);
+		
 		archivo.add(salir);
 		//archivo
 		//acciones
@@ -118,9 +121,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		acciones.add(inciarpartido);
 		acciones.add(conectar);
 		
-		acciones.add(cargar);
-		acciones.add(pausar);
+		
 		acciones.add(finpartido);
+		ayuda.add(help);
 		//acciones
 		barra.add(archivo);
 		barra.add(acciones);
@@ -146,6 +149,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		cancha = new JLabel(new ImageIcon("src\\images\\can.png"));
 		cancha.setLayout(new BorderLayout());
 		panel5.add(cancha);
+		
 		panel6.setLayout(new GridLayout(1,2));
 		panel6.add(panel7);
 		panel7.setLayout(new BorderLayout());
@@ -174,6 +178,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		panel12.setLayout(new GridLayout(1,1,10,10));
 		panel12.add(jugadascomplejas);
 		consultar.addActionListener(this);
+		ejecutar.addActionListener(this);
 		adelante.addActionListener(new OyenteButton());
 		correr.addActionListener(new OyenteButton());
 		atras.addActionListener(new OyenteButton());
@@ -187,6 +192,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		conectar.addActionListener(new OyenteMenu());
 		consultarEXjugada.addActionListener(new OyenteMenu());
 		consultarEXjugador.addActionListener(new OyenteMenu());
+		inciarpartido.addActionListener(new OyenteMenu());
+		help.addActionListener(new OyenteMenu());
+		finpartido.addActionListener(new OyenteMenu());
+	
 		setIconImage(icon.getImage());
 		setSize(900,650);
 		setVisible(true);
@@ -197,7 +206,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 
 	@Override
 	public void actionPerformed(ActionEvent arg) {
-		
+		String s = (String)arg.getActionCommand();
+	if(s.equals("Consultar")){
 		if(tip == 1){
 			WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/explicacion");
 			JSONObject respuesta = webResource.queryParam("nombre", (String) options.getSelectedItem()).get(JSONObject.class);
@@ -215,7 +225,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		else if(tip == 2){
 			WebResource webResource  = Main.client.resource(Main.URL+"jugador/info");
 			JSONObject respuesta = webResource.queryParam("nombre", (String) options.getSelectedItem()).get(JSONObject.class);
-			System.out.println(respuesta);
+			
 			try {
 				
 				areah.setText("");
@@ -228,6 +238,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 				e.printStackTrace();
 			}
 		}
+	}else if(s.equals("Ejecutar")){
+		WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/ejecutar");
+		String respuesta = webResource.queryParam("nombre", (String)jugadascomplejas.getSelectedItem()).get(String.class);
+		System.out.println(respuesta);
 	}
-	
+}
 }

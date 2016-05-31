@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -11,6 +12,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 public class OyenteMenu implements ActionListener {
@@ -25,6 +27,18 @@ public class OyenteMenu implements ActionListener {
 				if(opcion == 0){
 					System.exit(0);
 				}
+			}else if(s.equals("Finalizar partido")){
+				WebResource webResource  = Main.client.resource(Main.URL+"Partido/finalizar");
+				MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+				Params.add("nombre1", IniciarPartido.jug1);
+				Params.add("nombre2", IniciarPartido.jug2);
+				String respuesta = webResource.queryParams(Params).get(String.class);
+				JOptionPane.showMessageDialog(null,respuesta,"Listo",JOptionPane.INFORMATION_MESSAGE);
+				VentanaPrincipal.jugadascomplejas.removeAllItems();
+				VentanaPrincipal.jugadascomplejas.updateUI();
+			}
+			else if(s.equals("Ayuda")){
+				new VentanaAyuda().Lanzar();
 			}
 			else if(s.equals("Conectar a robot")){
 				new Conexion().Lanzar();
@@ -37,6 +51,9 @@ public class OyenteMenu implements ActionListener {
 				else if(respuesta.equals("Conexion fallida")){
 					JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
 				}*/
+			}
+			else if(s.equals("Iniciar partido")){
+				new IniciarPartido().Lanzar();
 			}
 			else if(s.equals("Consultar Explicacion de una jugada")){
 				VentanaPrincipal.options.removeAllItems();

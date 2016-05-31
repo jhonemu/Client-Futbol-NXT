@@ -23,7 +23,7 @@ import com.sun.jersey.api.client.WebResource;
 public class Conexion extends JFrame implements ActionListener {
 	
 	Container contenedor;
-	JComboBox<String> robots;
+	JComboBox<String> robots,arqueros,delanteros;
 	JPanel panel1;
 	JButton conectar;
 	public Conexion(){
@@ -38,6 +38,8 @@ public class Conexion extends JFrame implements ActionListener {
 		contenedor.add(panel1);
 		panel1.setLayout(new BoxLayout(panel1,BoxLayout.Y_AXIS));
 		robots = new JComboBox<String>();
+		arqueros = new JComboBox<String>();
+		delanteros = new JComboBox<String>();
 		conectar = new JButton("Conectar");
 		panel1.add(new JLabel("Seleccione un robot"));
 		WebResource webResource  = Main.client.resource(Main.URL+"conect/robot");
@@ -51,6 +53,7 @@ public class Conexion extends JFrame implements ActionListener {
 			}
 			robots.setMaximumSize(new Dimension(250,30));
 			panel1.add(robots);
+			
 			panel1.add(conectar);
 			conectar.addActionListener(this);
 		} catch (JSONException e) {
@@ -58,7 +61,7 @@ public class Conexion extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		
-		setSize(200,110);
+		setSize(200,210);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo (null);
@@ -71,9 +74,11 @@ public class Conexion extends JFrame implements ActionListener {
 		String respuesta = webResource.queryParam("nombre", nombre).get(String.class);
 		if(respuesta.equals("Conexion Exitosa")){
 			JOptionPane.showMessageDialog(null,respuesta,"EXITO",JOptionPane.INFORMATION_MESSAGE);
+			this.dispose();
 		}
 		else if(respuesta.equals("Conexion fallida")){
 			JOptionPane.showMessageDialog(null,respuesta,"ERROR",JOptionPane.ERROR_MESSAGE);
+			this.dispose();
 		}
 		
 	}

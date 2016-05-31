@@ -18,7 +18,7 @@ public class VentanaAdmin extends JFrame {
 	public static JPanel panel2;
 	JLabel explic;
 	JLabel bien;
-	JButton registraradmin,crearjugador,crearjugada,remjugador,remjugada;
+	public static JButton registraradmin,crearjugador,crearjugada,remjugador,remjugada;
 	
 	
 	
