@@ -1,13 +1,12 @@
 package api.futbol.GUI;
 
 
-import java.awt.Graphics;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;

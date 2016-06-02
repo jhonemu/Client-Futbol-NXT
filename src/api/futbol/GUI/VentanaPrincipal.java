@@ -1,7 +1,7 @@
 package api.futbol.GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -31,7 +31,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-import lejos.nxt.Motor;
+
 
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame implements ActionListener  {

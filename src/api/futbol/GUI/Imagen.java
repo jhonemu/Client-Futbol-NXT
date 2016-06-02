@@ -11,7 +11,7 @@ public class Imagen extends JPanel {
 	public static ImageIcon img;
 	public Imagen(){
 		this.setMaximumSize(new Dimension(1,1));
-		this.img = new ImageIcon("src\\images\\ic_launcher.png");
+		img = new ImageIcon("src\\images\\ic_launcher.png");
 	}
 	
 	public void paint(Graphics g) {

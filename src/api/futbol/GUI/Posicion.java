@@ -1,13 +1,13 @@
 package api.futbol.GUI;
 
 import javax.swing.ImageIcon;
-import javax.ws.rs.core.MultivaluedMap;
+
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 
 public class Posicion {
 	public final int xmax = 520;
