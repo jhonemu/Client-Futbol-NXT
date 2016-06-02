@@ -77,7 +77,263 @@ public class OyenteBotonAdmin implements ActionListener {
 					}
 				}
 			});
-		}else if(s.equals("Crear nueva Jugada")){
+		}else if(s.equals("Editar un jugador")){
+			VentanaAdmin.panel2.removeAll();
+			VentanaAdmin.panel2.updateUI();
+			VentanaAdmin.panel2.add(new JLabel("Seleccione el jugador"));
+			JComboBox<String> jugadores = new JComboBox<String>();
+			WebResource webResource  = Main.client.resource(Main.URL+"jugador/lista");
+			JSONObject respuesta = webResource.get(JSONObject.class);
+			
+			JSONArray lista;
+			try {
+				lista = (JSONArray) respuesta.get("jugadores");
+				for (int i = 0;i<lista.length();i++){
+					JSONObject aux = (JSONObject) lista.get(i);
+					jugadores.addItem((String) aux.get("nombre"));
+				
+				}
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+			}
+			jugadores.setMaximumSize(new Dimension(450,23));
+			VentanaAdmin.panel2.add(jugadores);
+			JButton agregar = new JButton("Agregar jugadas");
+			JButton quitar = new JButton("Quitar jugadas");
+			VentanaAdmin.panel2.add(agregar);
+			VentanaAdmin.panel2.add(quitar);
+			quitar.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					VentanaAdmin.panel2.removeAll();
+					VentanaAdmin.panel2.updateUI();
+					String nombrejug =(String) jugadores.getSelectedItem();
+					JComboBox<String> jug = new JComboBox<String>();
+					WebResource webResource  = Main.client.resource(Main.URL+"jugador/jugadas");
+					JSONObject respuesta = webResource.queryParam("nombre",nombrejug).get(JSONObject.class);
+					try {
+						JSONArray jarquero = (JSONArray) respuesta.get("jugadas");
+						for (int i = 0 ; i<jarquero.length();i++){
+							JSONObject aux = new JSONObject();
+							aux = (JSONObject) jarquero.get(i);
+							jug.addItem((String) aux.get("Jugada"));
+						}
+						
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+					VentanaAdmin.panel2.add(jug);
+					jug.setMaximumSize(new Dimension(450,23));
+					JButton ag = new JButton("Quitar");
+					VentanaAdmin.panel2.add(ag);
+					ag.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String jugada = (String) jug.getSelectedItem();
+							WebResource webResource  = Main.client.resource(Main.URL+"jugador/quitar");
+							MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+							Params.add("nombrejugador", nombrejug);
+							Params.add("nombrejugada", jugada);
+							String respuesta = webResource.queryParams(Params).get(String.class);
+							JOptionPane.showMessageDialog(null,respuesta,"Listo",JOptionPane.INFORMATION_MESSAGE);
+							jug.removeAllItems();
+							WebResource webResource2  = Main.client.resource(Main.URL+"jugador/jugadas");
+							JSONObject respuesta2 = webResource2.queryParam("nombre",nombrejug).get(JSONObject.class);
+							try {
+								JSONArray jarquero = (JSONArray) respuesta2.get("jugadas");
+								for (int i = 0 ; i<jarquero.length();i++){
+									JSONObject aux = new JSONObject();
+									aux = (JSONObject) jarquero.get(i);
+									jug.addItem((String) aux.get("Jugada"));
+								}
+								
+							} catch (JSONException e1) {
+								e1.printStackTrace();
+							}
+							jug.updateUI();
+						}
+						
+					});
+				}
+				
+			});
+			agregar.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg) {
+					VentanaAdmin.panel2.removeAll();
+					VentanaAdmin.panel2.updateUI();
+					String nombrejug =(String) jugadores.getSelectedItem();
+					JComboBox<String> jug = new JComboBox<String>();
+					/*WebResource webResource  = Main.client.resource(Main.URL+"jugador/jugadas");
+					JSONObject respuesta = webResource.queryParam("nombre",nombre).get(JSONObject.class);
+					try {
+						JSONArray jarquero = (JSONArray) respuesta.get("jugadas");
+						for (int i = 0 ; i<jarquero.length();i++){
+							JSONObject aux = new JSONObject();
+							aux = (JSONObject) jarquero.get(i);
+							jug.addItem((String) aux.get("Jugada"));
+						}
+						
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}*/
+					WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/lista");
+					JSONObject respuesta = webResource.get(JSONObject.class);
+					
+						JSONArray jugA;
+						try {
+							jugA = (JSONArray) respuesta.get("Jugadas");
+							for(int i=0;i<jugA.length();i++){
+								JSONObject aux = (JSONObject) jugA.get(i);
+								jug.addItem((String)aux.get("Nombre jugada"));
+							}
+						} catch (JSONException e) {
+							
+							e.printStackTrace();
+						}
+					
+						
+						
+					VentanaAdmin.panel2.add(jug);
+					jug.setMaximumSize(new Dimension(450,23));
+					JButton ag = new JButton("Agregar");
+					VentanaAdmin.panel2.add(ag);
+					ag.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String jugada = (String) jug.getSelectedItem();
+							WebResource webResource  = Main.client.resource(Main.URL+"jugador/agregar");
+							MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+							Params.add("nombrejugador", nombrejug);
+							Params.add("nombrejugada", jugada);
+							String respuesta = webResource.queryParams(Params).get(String.class);
+							JOptionPane.showMessageDialog(null,respuesta,"Listo",JOptionPane.INFORMATION_MESSAGE);
+						}
+						
+					});
+				}
+				
+			});
+			
+		}else if(s.equals("Editar una jugada")){
+			VentanaAdmin.panel2.removeAll();
+			VentanaAdmin.panel2.updateUI();
+			WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/lista");
+			JSONObject respuesta = webResource.get(JSONObject.class);
+			String []  com = null;
+			try {
+				JSONArray jug = (JSONArray) respuesta.get("Jugadas");
+				int a = jug.length();
+				 com = new String [a];
+				
+				for(int i=0;i<jug.length();i++){
+					JSONObject aux = (JSONObject) jug.get(i);
+					com[i] = (String)aux.get("Nombre jugada");
+				}
+				VentanaAdmin.panel2.add(new JLabel("Escoja la jugada a editar"));
+				
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+			JComboBox<String> lista = new JComboBox<String>(com);
+			lista.setMaximumSize(new Dimension(450,23));
+			VentanaAdmin.panel2.add(lista);
+			JButton agregar = new JButton("Agregar jugadas");
+			JButton quitar = new JButton("Quitar jugadas");
+			VentanaAdmin.panel2.add(agregar);
+			VentanaAdmin.panel2.add(quitar);
+			quitar.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					VentanaAdmin.panel2.removeAll();
+					VentanaAdmin.panel2.updateUI();
+					String nombrejugada =(String) lista.getSelectedItem();
+					JComboBox<String> primitivas = new JComboBox<String>();
+					WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/jugadas");
+					JSONObject respuesta = webResource.queryParam("nombre", nombrejugada).get(JSONObject.class);
+					try {
+						JSONArray lis = (JSONArray) respuesta.get("jugada");
+						for(int i=0;i<lis.length();i++){
+							JSONObject aux = (JSONObject) lis.get(i);
+							primitivas.addItem((String) aux.get("jugada"));
+						}
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+					VentanaAdmin.panel2.add(primitivas);
+					primitivas.setMaximumSize(new Dimension(450,23));
+					JButton qu = new JButton("Quitar");
+					VentanaAdmin.panel2.add(qu);
+					qu.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String jugada = (String) primitivas.getSelectedItem();
+							WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/quitar");
+							MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+							Params.add("nombrejugada", nombrejugada);
+							Params.add("nombrejug", jugada);
+							String respuesta = webResource.queryParams(Params).get(String.class);
+							JOptionPane.showMessageDialog(null,respuesta,"Listo",JOptionPane.INFORMATION_MESSAGE);
+							primitivas.removeAllItems();
+							WebResource webResource2  = Main.client.resource(Main.URL+"jcomplejas/jugadas");
+							JSONObject respuesta2 = webResource2.queryParam("nombre", nombrejugada).get(JSONObject.class);
+							try {
+								JSONArray lis = (JSONArray) respuesta2.get("jugada");
+								for(int i=0;i<lis.length();i++){
+									JSONObject aux = (JSONObject) lis.get(i);
+									primitivas.addItem((String) aux.get("jugada"));
+								}
+							} catch (JSONException e1) {
+								e1.printStackTrace();
+							}
+							
+						}
+						
+					});
+				}
+				
+			});
+			agregar.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					VentanaAdmin.panel2.removeAll();
+					VentanaAdmin.panel2.updateUI();
+					String nombrejugada =(String) lista.getSelectedItem();
+					String[]aux={"Trotar","Correr","Girar a la izquierda","Girar a la derecha","Chute","Patear","Ir atras","Correr atras"};
+					JComboBox<String> primitivas = new JComboBox<String>(aux);
+					JButton ag = new JButton("Agregar");
+					primitivas.setMaximumSize(new Dimension(450,23));
+					VentanaAdmin.panel2.add(primitivas);
+					VentanaAdmin.panel2.add(ag);
+					ag.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String jugada = (String) primitivas.getSelectedItem();
+							WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/agregar");
+							MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+							Params.add("nombrejugada", nombrejugada);
+							Params.add("nombrejug", jugada);
+							String respuesta = webResource.queryParams(Params).get(String.class);
+							JOptionPane.showMessageDialog(null,respuesta,"Listo",JOptionPane.INFORMATION_MESSAGE);
+							
+						}
+						
+					});
+					
+				}
+				
+			});
+		}
+		else if(s.equals("Crear nueva Jugada")){
 			VentanaAdmin.panel2.removeAll();
 			VentanaAdmin.panel2.updateUI();
 			VentanaAdmin.panel2.add(new JLabel("Nombre de la jugada"));

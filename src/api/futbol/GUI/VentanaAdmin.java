@@ -18,7 +18,7 @@ public class VentanaAdmin extends JFrame {
 	public static JPanel panel2;
 	JLabel explic;
 	JLabel bien;
-	public static JButton registraradmin,crearjugador,crearjugada,remjugador,remjugada;
+	public static JButton registraradmin,crearjugador,crearjugada,remjugador,remjugada,editarjugador,editarjugada;
 	
 	
 	
@@ -35,6 +35,8 @@ public class VentanaAdmin extends JFrame {
 		crearjugada = new JButton("Crear nueva Jugada");
 		remjugador = new JButton("Remover un Jugador");
 		remjugada = new JButton("Remover una Jugada");
+		editarjugador= new JButton("Editar un jugador");
+		editarjugada= new JButton("Editar una jugada");
 		//panel1.setLayout(new BoxLayout(panel1,BoxLayout.Y_AXIS));
 		panel1.setLayout(new GridLayout(10,1,10,10));
 		panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
@@ -52,11 +54,15 @@ public class VentanaAdmin extends JFrame {
 		panel1.add(crearjugador);
 		panel1.add(remjugador);
 		panel2.add(explic);
+		panel1.add(editarjugador);
+		panel1.add(editarjugada);
 		registraradmin.addActionListener( new OyenteBotonAdmin());
 		crearjugada.addActionListener(new OyenteBotonAdmin());
 		remjugada.addActionListener(new OyenteBotonAdmin());
 		crearjugador.addActionListener(new OyenteBotonAdmin());
 		remjugador.addActionListener(new OyenteBotonAdmin());
+		editarjugador.addActionListener(new OyenteBotonAdmin());
+		editarjugada.addActionListener(new OyenteBotonAdmin());
 		setSize(500,550);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

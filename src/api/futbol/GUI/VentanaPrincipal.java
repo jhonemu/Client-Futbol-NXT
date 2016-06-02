@@ -23,34 +23,42 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import lejos.nxt.Motor;
 
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame implements ActionListener  {
 	Container contenedor;
-	JPanel panel1,panel2,panel3,panel4,panel5,panel6,panel7,panel8,panel9,panel10,panel11,panel12,panel13;
+	
+	JPanel panel1,panel2,panel3,panel4,panel6,panel7,panel8,panel9,panel10,panel11,panel12,panel13;
 	JMenuBar barra;
 	JMenu archivo,acciones,ayuda;
-	JMenuItem help,inciarpartido,conectar,salir,regAdmin,listjugadas,crearjug,finpartido,consultarEXjugada,cargar,consultarEXjugador,crearjugcompleja,listJugadores;
+	public static JMenuItem help,inciarpar,conectar,salir,regAdmin,listjugadas,crearjug,finpartido,consultarEXjugada,cargar,consultarEXjugador,crearjugcompleja,listJugadores,Rgolafavor,Rgolencontra;
 	ImageIcon icon;
+	public static JPanel panel5;
 	public static JTextArea areah;
 	public static ArrayList<String> jugadasdelantero = new ArrayList<>();
 	public static ArrayList<String> jugadasarquero = new ArrayList<>();
-	public static JLabel historia,cancha;
-	
+	public static JLabel historia,cancha,marcador;
+	public static int gafavor =0;
+	public static int gcontra =0;
 	JScrollPane scroll;
 	Image s;
-	
+	public static Imagen im= new Imagen();
 	public static JButton adelante,atras,izquierda,derecha,patear,correr,chutar,runAtras , ejecutar, parar,consultar;
 	public static int tip = 0;
 	public static JComboBox<String> jugadascomplejas,options;
 	public VentanaPrincipal(){
 		super("Futbol-NXT");
 	}
+	
 	
 	
 	public void lanzarAd(){
@@ -68,6 +76,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		panel11 = new JPanel();
 		panel12 = new JPanel();
 		panel13 = new JPanel();
+		marcador = new JLabel(gafavor+"-"+gcontra);
 		jugadascomplejas = new JComboBox<String>();
 		options = new JComboBox<String>();
 		consultar = new JButton("Consultar");
@@ -81,8 +90,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		derecha = new JButton("Derecha");
 		patear =  new JButton("Chute");
 		chutar = new JButton("Patear");
-		panel12.setBackground(Color.BLUE);
-		panel13.setBackground(Color.black);
+		
 		historia = new JLabel("Historia");
 		areah = new JTextArea(5,20);
 		areah.setEditable(false);
@@ -101,8 +109,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		consultarEXjugada = new JMenuItem("Consultar Explicacion de una jugada");
 		consultarEXjugador = new JMenuItem("Consultar informacion de un jugador");
 		help = new JMenuItem("Ayuda");
-		
-		inciarpartido = new JMenuItem("Iniciar partido");
+		Rgolafavor = new JMenuItem("Registrar gol a favor");
+		Rgolencontra = new JMenuItem("Registrar gol en contra");
+		inciarpar = new JMenuItem("Iniciar partido");
 		conectar =new JMenuItem("Conectar a robot");
 		
 		finpartido = new JMenuItem("Finalizar partido");
@@ -118,10 +127,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		//archivo
 		//acciones
 		
-		acciones.add(inciarpartido);
+		acciones.add(inciarpar);
 		acciones.add(conectar);
-		
-		
+		acciones.add(Rgolafavor);
+		acciones.add(Rgolencontra);
 		acciones.add(finpartido);
 		ayuda.add(help);
 		//acciones
@@ -149,7 +158,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		cancha = new JLabel(new ImageIcon("src\\images\\can.png"));
 		cancha.setLayout(new BorderLayout());
 		panel5.add(cancha);
-		
+		cancha.add(im);
 		panel6.setLayout(new GridLayout(1,2));
 		panel6.add(panel7);
 		panel7.setLayout(new BorderLayout());
@@ -172,10 +181,25 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		panel8.add(panel12);
 		panel8.add(panel13);
 		panel13.setLayout(new GridLayout(1,2,10,10));
-		panel13.add(ejecutar);
-		panel13.add(parar);
 		
-		panel12.setLayout(new GridLayout(1,1,10,10));
+		panel13.add(ejecutar);
+		
+		ejecutar.setEnabled(false);
+		Rgolafavor.setEnabled(false);
+		inciarpar.setEnabled(false);
+		Rgolencontra.setEnabled(false);
+		finpartido.setEnabled(false);
+		adelante.setEnabled(false);
+		correr.setEnabled(false);
+		atras.setEnabled(false);
+		runAtras.setEnabled(false);
+		izquierda.setEnabled(false);
+		derecha.setEnabled(false);
+		patear .setEnabled(false);
+		chutar.setEnabled(false);
+		panel12.setLayout(new GridLayout(3,1,10,10));
+		panel12.add(new JLabel("Marcador"));
+		panel12.add(marcador);
 		panel12.add(jugadascomplejas);
 		consultar.addActionListener(this);
 		ejecutar.addActionListener(this);
@@ -192,10 +216,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		conectar.addActionListener(new OyenteMenu());
 		consultarEXjugada.addActionListener(new OyenteMenu());
 		consultarEXjugador.addActionListener(new OyenteMenu());
-		inciarpartido.addActionListener(new OyenteMenu());
+		inciarpar.addActionListener(new OyenteMenu());
 		help.addActionListener(new OyenteMenu());
 		finpartido.addActionListener(new OyenteMenu());
-	
+		Rgolafavor.addActionListener(new OyenteMenu());
+		Rgolencontra.addActionListener(new OyenteMenu());
 		setIconImage(icon.getImage());
 		setSize(900,650);
 		setVisible(true);
@@ -240,8 +265,17 @@ public class VentanaPrincipal extends JFrame implements ActionListener  {
 		}
 	}else if(s.equals("Ejecutar")){
 		WebResource webResource  = Main.client.resource(Main.URL+"jcomplejas/ejecutar");
-		String respuesta = webResource.queryParam("nombre", (String)jugadascomplejas.getSelectedItem()).get(String.class);
+		MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
+		Params.add("nombre", (String)jugadascomplejas.getSelectedItem());
+		Params.add("nombrejug", Posicion.activo);
+		String respuesta = webResource.queryParams(Params).get(String.class);
 		System.out.println(respuesta);
+		String[] pos = respuesta.split(",");
+		Main.posicion.calcular(Integer.valueOf(pos[0]),Integer.valueOf(pos[1]));
+		VentanaPrincipal.cancha.add(VentanaPrincipal.im);
+		VentanaPrincipal.cancha.revalidate();
+		VentanaPrincipal.cancha.repaint();
+
 	}
 }
 }

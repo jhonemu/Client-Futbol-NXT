@@ -1,6 +1,7 @@
 package api.futbol.GUI;
 
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,23 +23,41 @@ public class OyenteButton implements ActionListener{
 			cont++;
 			//WebResource webResource2  = Main.client.resource(Main.URL+"pos/posi");
 			
-			System.out.println("contador trote "+cont.toString());
+			
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
 			Params.add("cont",cont.toString());
 			String respuesta = webResource.queryParams(Params).get(String.class);
 			
 			System.out.println(respuesta);
+			if(!respuesta.equals("y")){
+			String[] pos = respuesta.split(",");
+			System.out.println(Integer.valueOf(pos[0]));
+			System.out.println(Integer.valueOf(pos[1]));
+			Main.posicion.calcular(Integer.valueOf(pos[0]),Integer.valueOf(pos[1]));
+			VentanaPrincipal.cancha.add(VentanaPrincipal.im);
+			VentanaPrincipal.cancha.revalidate();
+			VentanaPrincipal.cancha.repaint();
+			}
 			
 		}
 		else if (s.equals("Correr")){
 			cont++;
-			System.out.println("contador correr "+cont.toString());
+			
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
 			Params.add("jugada",s);
 			Params.add("cont",cont.toString());
 			String respuesta = webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
+			if(!respuesta.equals("y")){
+				String[] pos = respuesta.split(",");
+				System.out.println(Integer.valueOf(pos[0]));
+				System.out.println(Integer.valueOf(pos[1]));
+				Main.posicion.calcular(Integer.valueOf(pos[0]),Integer.valueOf(pos[1]));
+				VentanaPrincipal.cancha.add(VentanaPrincipal.im);
+				VentanaPrincipal.cancha.revalidate();
+				VentanaPrincipal.cancha.repaint();
+				}
 		
 			
 		}
@@ -49,6 +68,15 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont",cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
+			if(!respuesta.equals("y")){
+				String[] pos = respuesta.split(",");
+				System.out.println(Integer.valueOf(pos[0]));
+				System.out.println(Integer.valueOf(pos[1]));
+				Main.posicion.calcular(Integer.valueOf(pos[0]),Integer.valueOf(pos[1]));
+				VentanaPrincipal.cancha.add(VentanaPrincipal.im);
+				VentanaPrincipal.cancha.revalidate();
+				VentanaPrincipal.cancha.repaint();
+				}
 
 		}
 		else if (s.equals("Correr Atras")){
@@ -58,6 +86,15 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont",cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
+			if(!respuesta.equals("y")){
+				String[] pos = respuesta.split(",");
+				System.out.println(Integer.valueOf(pos[0]));
+				System.out.println(Integer.valueOf(pos[1]));
+				Main.posicion.calcular(Integer.valueOf(pos[0]),Integer.valueOf(pos[1]));
+				VentanaPrincipal.cancha.add(VentanaPrincipal.im);
+				VentanaPrincipal.cancha.revalidate();
+				VentanaPrincipal.cancha.repaint();
+				}
 			
 		}
 		else if (s.equals("Izquierda")){
@@ -67,6 +104,7 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont",cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
+		
 
 		}
 		else if (s.equals("Derecha")){
@@ -76,7 +114,7 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont",cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
-
+			
 		}
 		else if (s.equals("Chute")){
 			
@@ -85,7 +123,8 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont", cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
-
+				
+			
 		}
 		else if (s.equals("Patear")){
 			MultivaluedMap<String, String> Params = new MultivaluedMapImpl();
@@ -93,7 +132,7 @@ public class OyenteButton implements ActionListener{
 			Params.add("cont", cont.toString());
 			String respuesta =webResource.queryParams(Params).get(String.class);
 			System.out.println(respuesta);
-
+			//String[] pos = respuesta.split(",");
 		}
 	}
 }

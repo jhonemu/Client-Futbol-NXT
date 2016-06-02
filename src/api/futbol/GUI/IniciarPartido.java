@@ -27,7 +27,7 @@ public class IniciarPartido extends JFrame implements ActionListener{
 	JComboBox<String> arqueros,delanteros;
 	JPanel panel1;
 	JButton jug;
-	public static String jug1,jug2;
+	public static String jug1,jug2 = null;
 	public IniciarPartido(){
 		super("Iniciar Partido");
 	}
@@ -88,26 +88,24 @@ public class IniciarPartido extends JFrame implements ActionListener{
 		JSONObject respuesta = webResource.queryParams(Params).get(JSONObject.class);
 		try {
 			JSONArray jarquero = (JSONArray) respuesta.get("Aerquero");
-			JSONArray jdelantero = (JSONArray) respuesta.get("Delantero");
+			
 			for (int i = 0 ; i<jarquero.length();i++){
 				JSONObject aux = new JSONObject();
 				aux = (JSONObject) jarquero.get(i);
-				VentanaPrincipal.jugadasarquero.add((String) aux.get("jugada"));
+				
 				VentanaPrincipal.jugadascomplejas.addItem((String) aux.get("jugada"));
 				VentanaPrincipal.jugadascomplejas.updateUI();
 			}
-			for (int i = 0 ; i<jdelantero.length();i++){
-				JSONObject aux = new JSONObject();
-				aux = (JSONObject) jdelantero.get(i);
-				VentanaPrincipal.jugadasdelantero.add((String) aux.get("jugada"));
-				
-			}
+			
 			this.dispose();
 		} catch (Exception e1) {
 			
 			e1.printStackTrace();
 		}
-		
+		Main.img =2;
+		VentanaPrincipal.cancha.add(VentanaPrincipal.im);
+		VentanaPrincipal.cancha.revalidate();
+		VentanaPrincipal.cancha.repaint();
 	}
 
 }
